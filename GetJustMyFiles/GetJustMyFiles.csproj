@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>gamon LegoLogo decentrato trasparente 256x256.ico</ApplicationIcon>
+    <Version>0.9.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="GetRightFiles-PC0152.cs" />
+    <Compile Remove="NetworkConnection.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="gamon LegoLogo decentrato trasparente 256x256.ico" />
+  </ItemGroup>
+
+</Project>

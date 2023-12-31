@@ -1,0 +1,19 @@
+#folders excluded (following order of sections is mandative!) 
+Condivisione
+#Images
+obj
+bin
+packages
+.vs
+.git
+.gitHub
+
+#extensions excluded
+.vdi
+.jpg
+.png
+.gif
+#.exe
+#files excluded
+#esclusioneEsclusa.txt
+README.md
