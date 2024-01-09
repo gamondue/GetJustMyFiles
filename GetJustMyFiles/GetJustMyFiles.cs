@@ -1,4 +1,6 @@
-﻿namespace GetJustMyFiles
+﻿using System.IO;
+
+namespace GetJustMyFiles
 {
     /// <summary>
     /// Reads files from a network share or a folder, copying only those interesting for the user 
@@ -105,8 +107,8 @@
                     NewDestinationFolderName += _subjectName + "_";
                 if (_exerciseFolderName != "")
                     NewDestinationFolderName += _exerciseFolderName;
-                NewDestinationFolderName += "\\" + DateTime.Now.ToString("yyyy-MM-dd");
-                NewDestinationFolderName = NewDestinationFolderName.Replace("\\", "");
+                NewDestinationFolderName = Path.Combine(NewDestinationFolderName, DateTime.Now.ToString("yyyy-MM-dd"));
+                //NewDestinationFolderName = NewDestinationFolderName.Replace("\\", "");
 
                 if (NewDestinationFolderName != null)
                     _destinationFolder = Path.Combine(_destinationFolder, NewDestinationFolderName);
@@ -115,8 +117,8 @@
             }
             else
             {
-                Console.WriteLine("Cartella sorgente: " + _sourceInitialFolder);
-                Console.WriteLine("Cartella destinazione: " + _destinationInitialFolder);
+                Console.WriteLine("Cartella sorgente : " + _sourceInitialFolder);
+                Console.WriteLine("Cartella destinaz.: " + _destinationInitialFolder);
                 _destinationFolder = _destinationInitialFolder;
                 canCopy = true;
             }
@@ -152,7 +154,7 @@
             if (!Directory.Exists(folderToScan))
             {
                 //Console.WriteLine("Folder to scan does not exist!");
-                Console.WriteLine("La cartella da scansionare non esiste!");
+                Console.WriteLine("La cartella da scansionare (" + folderToScan + " non esiste!");
                 copy = false;
                 return copy;
             }
@@ -171,7 +173,9 @@
                     Console.WriteLine("Numero di cartelle {0}:", _nFoldersFound);
                     //Console.WriteLine("Input c and Enter to continue and copy, any key and Enter to repeat the list, q to quit");
                     Console.WriteLine("Immettere 'c' e Enter per cominciare a copiare, q per uscire, altro per ripetere la lettura della lista");
-                    readResponse = Console.ReadLine().Substring(0, 1).ToLower();
+                    readResponse = Console.ReadLine();
+                    if (readResponse != "")
+                        readResponse = readResponse.Substring(0, 1).ToLower();
                     repeatListing = (readResponse == "") || readResponse != "c" && readResponse != "q";
                 }
                 copy = readResponse == "c";
@@ -199,7 +203,7 @@
         private static void CopyFilesInThisFolderAndChildFolders(string SourceFolderName,
             string DestinationFolderName)
         {
-            // copy the files local files in the destination directory
+            // copy source files in the destination directory
             // (those in lower levels are not copied, based on the number of parameters given)
 
             if (_folderRecursionLevel >= _foldersWhereSkippingFiles - 1)
@@ -212,13 +216,21 @@
                     string destinationFile = "";
                     if (justName != null)
                         destinationFile = Path.Combine(DestinationFolderName, justName);
-
+                    
                     bool excludedFile = false;
                     if (filesExclusionsList.Contains(Path.GetFileName(file.ToLower())))
                         excludedFile = true;
                     if (extensionsExclusionsList.Contains(Path.GetExtension(file).ToLower()))
                         excludedFile = true;
-                    if (!excludedFile)
+
+                    // when traversing the students' net folders, we shouldn't copy the files that stay in 
+                    // <last name>.<first name>, and <Subject> folders (should copy files in <Exercitatio> folder)
+                    // !!!! TODO !!!! improve performance of the following 
+                    if (Path.GetFileName(SourceFolderName) == _className || Path.GetFileName(SourceFolderName) == _subjectName)
+                        excludedFile = true;
+
+                    // copy if not previously excluded
+                    if (!excludedFile) 
                     {
                         //Console.WriteLine("Source directory: " + SourceFolderName);
                         Console.WriteLine("Cartella sorgente : " + SourceFolderName);
