@@ -1,4 +1,6 @@
-﻿namespace GetJustMyFiles
+﻿using System.IO;
+
+namespace GetJustMyFiles
 {
     /// <summary>
     /// Reads files from a network share or a folder, copying only those interesting for the user 
@@ -48,7 +50,7 @@
                 //Console.WriteLine("\nUnattended use: .\\GetJustMyFiles <Source initial folder> <Destination folder>");
                 //Console.WriteLine("If <Destination folder> is omitted will save on desktop");
                 //Console.WriteLine("Giving no parameters will ask the user. Void input will set the default");
-                //Console.WriteLine("Giving all \"any\" to Class, Subject and ExerciSe will copy ALL subdirectories.");
+                //Console.WriteLine("Giving all \"any\" to Class, Subject and Exercize will copy ALL subdirectories.");
 
                 Console.WriteLine("\nUso senza UI: .\\GetJustMyFiles <Cartella sorgente> <Cartella di destinazione>");
                 Console.WriteLine("Se si omette <Cartella di destinazione> salva sul desktop");
