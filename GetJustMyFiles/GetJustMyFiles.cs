@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace GetJustMyFiles
+﻿namespace GetJustMyFiles
 {
     /// <summary>
     /// Reads files from a network share or a folder, copying only those interesting for the user 
@@ -50,15 +48,16 @@ namespace GetJustMyFiles
                 //Console.WriteLine("\nUnattended use: .\\GetJustMyFiles <Source initial folder> <Destination folder>");
                 //Console.WriteLine("If <Destination folder> is omitted will save on desktop");
                 //Console.WriteLine("Giving no parameters will ask the user. Void input will set the default");
-                //Console.WriteLine("Giving all \"any\" to Class, Subject and Exercize will copy all subdirectories.");
+                //Console.WriteLine("Giving all \"any\" to Class, Subject and ExerciSe will copy ALL subdirectories.");
 
                 Console.WriteLine("\nUso senza UI: .\\GetJustMyFiles <Cartella sorgente> <Cartella di destinazione>");
                 Console.WriteLine("Se si omette <Cartella di destinazione> salva sul desktop");
                 Console.WriteLine("Se non si danno parametri da shell il programma chiede i dati all'utente. Risposte vuote useranno il default.");
-                Console.WriteLine("Rispondere con tutti \"any\" a Classe, Materia e Cartella dell'esercizio, copia cartella e tutte le sottocartelle.");
+                Console.WriteLine("Rispondere con tutti \"any\" a Classe, Materia e Cartella dell'esercizio, copia cartella e TUTTE le sottocartelle.");
 
                 //Console.Write("\nSource base folder (default " + _sourceInitialFolder + "): ");
                 Console.Write("\nCartella base sorgente (default " + _sourceInitialFolder + "): ");
+
                 string dummy = Console.ReadLine();
                 if (dummy != "")
                     _sourceInitialFolder = dummy;
@@ -95,11 +94,13 @@ namespace GetJustMyFiles
                 Console.Write("Cartella dell'esercizio (dare 'any' per tutte, Enter per default)\n(default " +
                     _exerciseFolderName + "): ");
                 dummy = Console.ReadLine();
-                if (dummy != "" && dummy != "any")
+                string dummyLower = dummy.ToLower();
+                if (dummyLower != "" && dummyLower != "any")
                     _exerciseFolderName = dummy;
-                if (dummy.ToLower() == "any" || _exerciseFolderName == "any")
+                if (dummyLower == "any" || _exerciseFolderName == "any")
                     _exerciseFolderName = "";
-
+                if (args.Length == 0)
+                    SaveDefaults();
                 string NewDestinationFolderName = "";
                 if (_className != "")
                     NewDestinationFolderName += _className + "_";
@@ -140,8 +141,6 @@ namespace GetJustMyFiles
                 Console.WriteLine("Cartelle create e file copiati:");
                 CopyFilesInThisFolderAndChildFolders(_sourceInitialFolder, _destinationFolder);
             }
-            if (args.Length == 0)
-                SaveDefaults();
             Console.WriteLine();
             //Console.WriteLine("Done!");
             Console.WriteLine("Finito!");
@@ -216,7 +215,7 @@ namespace GetJustMyFiles
                     string destinationFile = "";
                     if (justName != null)
                         destinationFile = Path.Combine(DestinationFolderName, justName);
-                    
+
                     bool excludedFile = false;
                     if (filesExclusionsList.Contains(Path.GetFileName(file.ToLower())))
                         excludedFile = true;
@@ -224,13 +223,13 @@ namespace GetJustMyFiles
                         excludedFile = true;
 
                     // when traversing the students' net folders, we shouldn't copy the files that stay in 
-                    // <last name>.<first name>, and <Subject> folders (should copy files in <Exercitatio> folder)
+                    // <last name>.<first name>, and <Subject> folders (should copy files in <Exercise> folder)
                     // !!!! TODO !!!! improve performance of the following 
                     if (Path.GetFileName(SourceFolderName) == _className || Path.GetFileName(SourceFolderName) == _subjectName)
                         excludedFile = true;
 
                     // copy if not previously excluded
-                    if (!excludedFile) 
+                    if (!excludedFile)
                     {
                         //Console.WriteLine("Source directory: " + SourceFolderName);
                         Console.WriteLine("Cartella sorgente : " + SourceFolderName);
@@ -337,8 +336,8 @@ namespace GetJustMyFiles
         {
             if (!File.Exists(fileDefaults))
             {
-                // default file does not exist 
-                _sourceInitialFolder = @"\\10.0.0.10\Studenti\"; ;
+                // default file does not exist, make program's defaults
+                _sourceInitialFolder = @"\\10.0.0.10\Studenti\";
                 _destinationInitialFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 _className = "3E";
                 _subjectName = "Informatica";
@@ -348,8 +347,8 @@ namespace GetJustMyFiles
             string[] lines = File.ReadAllLines(fileDefaults);
             if (lines.Length == 0)
             {
-                // default file has no rows 
-                _sourceInitialFolder = @"\\10.0.0.10\Studenti\"; ;
+                // default file has no rows, make program's defaults
+                _sourceInitialFolder = @"\\10.0.0.10\Studenti\";
                 _destinationInitialFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 _className = "3E";
                 _subjectName = "Informatica";
@@ -397,15 +396,6 @@ namespace GetJustMyFiles
             defaults[4] = "Exercise folder\t" + _exerciseFolderName;
             File.WriteAllLines(fileDefaults, defaults);
         }
-        private static void ReadInclusions()
-        {
-            //if (!File.Exists(fileDefaults))
-            //{
-
-            //    return;
-            //}
-            //return;
-        }
         private static void ReadExclusions()
         {
             if (!File.Exists(fileExclusions))
@@ -427,51 +417,76 @@ namespace GetJustMyFiles
                     "\nProgram will not exclude any files or folder.");
                 return;
             }
-            if (lines[0].Substring(0, 8) != "#folders")
-            {
-                foldersExclusionsList.Clear();
-                extensionsExclusionsList.Clear();
-                filesExclusionsList.Clear();
-                Console.WriteLine("Format of file 'exclusions.txt' wrong." +
-                    "\nProgram will not exclude any files or folder.");
-                return;
-            }
-            int index = 1;
+            //if (lines[0].Substring(0, 4) != "- fo")
+            //{
+            //    foldersExclusionsList.Clear();
+            //    extensionsExclusionsList.Clear();
+            //    filesExclusionsList.Clear();
+            //    Console.WriteLine("Format of file 'exclusions.txt' wrong." +
+            //        "\nProgram will not exclude any files or folder.");
+            //    return;
+            //}
+            int index = 0;
             bool exit = false;
             do
             {
-                if (lines[index] == "") { }
-                else if (lines[index].Substring(0, 1) == "#")
+                if (lines[index] != "")
                 {
-                    if (lines[index].Length >= 11)
-                        exit = lines[index].Substring(0, 11) == "#extensions";
+                    int pos = lines[index].IndexOf('#');
+                    string line = lines[index];
+                    string firstChars = "";
+                    if (lines[index] != "" && pos >= 0)
+                    {
+                        firstChars = lines[index].Substring(0, pos);
+                        if (firstChars == "- ex")
+                        {
+                            exit = true;
+                            break;
+                        }
+                    }
+                    if (line != "" && firstChars != "- fo" && firstChars != "- ex")
+                    {
+                        foldersExclusionsList.Add(line.Trim().ToLower());
+                    }
                 }
-                else
-                    foldersExclusionsList.Add(lines[index].Trim().ToLower());
                 index++;
             } while (!exit);
             exit = false;
             do
             {
-                if (lines[index] == "") { }
-                else if (lines[index].Substring(0, 1) == "#")
+                string line = lines[index].Substring(0, lines[index].IndexOf('#'));
+                string firstChars = line.Substring(0, 4);
+                if (line != "")
                 {
-                    if (lines[index].Length >= 6)
-                        exit = lines[index].Substring(0, 6) == "#files";
+                    if (firstChars == "- ex")
+                        exit = true;
+                    else
+                        extensionsExclusionsList.Add(line.Trim().ToLower());
                 }
-                else
-                    extensionsExclusionsList.Add(lines[index].Trim().ToLower());
                 index++;
             } while (!exit);
             while (index < lines.Length)
             {
-                if (lines[index] == "") { }
-                else if (lines[index].Substring(0, 1) == "#")
-                { }
-                else
-                    filesExclusionsList.Add(lines[index].Trim().ToLower());
+                string line = lines[index].Substring(0, lines[index].IndexOf('#'));
+                string firstChars = line.Substring(0, 4);
+                if (line != "")
+                {
+                    if (firstChars == "- ex")
+                        exit = true;
+                    else
+                        filesExclusionsList.Add(lines[index].Trim().ToLower());
+                }
                 index++;
             }
+        }
+        private static void ReadInclusions()
+        {
+            //if (!File.Exists(fileDefaults))
+            //{
+
+            //    return;
+            //}
+            //return;
         }
     }
 }

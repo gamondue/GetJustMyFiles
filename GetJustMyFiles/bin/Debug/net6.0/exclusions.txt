@@ -1,4 +1,15 @@
-#folders excluded (following order of sections is mandative!) 
+# File of exclusions in GetMyFiles 
+# It is divided into three sections: folders excluded, extensions excluded and files excluded
+# (in thos files sections must be written in that order!)
+# Sections start with: 
+#  "- fo" (or "- folders excluded"): it is the beginning of the list of excluded folders
+#  "- ex" (or "- extensions excluded"): it is the beginning of the list of excluded extensions
+#  "- fi" (or "- files excluded"): it is the beginning of the list of excluded files
+
+# pound sign is the comment symbol. All text in a line following a # sign will be ignored 
+# an example follows, well suited for the folders in ITT Blaise Pascal - Cesena
+
+- folders excluded 
 Condivisione
 #Images
 obj
@@ -8,12 +19,14 @@ packages
 .git
 .gitHub
 
-#extensions excluded
+- extensions excluded 
 .vdi
 .jpg
 .png
 .gif
-#.exe
-#files excluded
+.zip
+.dll
+#.exe	# remove the pound sign if you don't want to get also exe files 
+- files excluded
 #esclusioneEsclusa.txt
-README.md
+README.md # just an example of a single file that isn't taken 
