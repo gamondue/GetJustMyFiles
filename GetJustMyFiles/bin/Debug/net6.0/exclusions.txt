@@ -7,7 +7,7 @@
 #  "- fi" (or "- files excluded"): it is the beginning of the list of excluded files
 
 # pound sign is the comment symbol. All text in a line following a # sign will be ignored 
-# an example follows, well suited for the folders in ITT Blaise Pascal - Cesena
+# an example follows, well suited for the folders in ITT's Blaise Pascal - Cesena LAN server 
 
 - folders excluded 
 Condivisione
@@ -15,6 +15,7 @@ Condivisione
 obj
 bin
 packages
+.bin
 .vs
 .git
 .gitHub
@@ -26,7 +27,7 @@ packages
 .gif
 .zip
 .dll
-#.exe	# remove the pound sign if you don't want to get also exe files 
+#.exe	# remove the pound sign if you don't want to get also files with extension .exe 
 - files excluded
 #esclusioneEsclusa.txt
 README.md # just an example of a single file that isn't taken 

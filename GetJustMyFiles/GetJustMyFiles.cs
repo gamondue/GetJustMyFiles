@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace GetJustMyFiles
+﻿namespace GetJustMyFiles
 {
     /// <summary>
     /// Reads files from a network share or a folder, copying only those interesting for the user 
@@ -25,7 +23,7 @@ namespace GetJustMyFiles
 
         private static string fileExclusions = @".\exclusions.txt";
         //private static string fileInclusions = @".\inclusions.txt";
-        private static string fileDefaults = @".\defaults.tsv";
+        private static string fileDefaults = @".\Defaults.tsv";
 
         /// <summary>
         /// Copies all the files of a source directory and sons into a destination directory
@@ -39,7 +37,7 @@ namespace GetJustMyFiles
         static void Main(string[] args)
         {
             string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Console.WriteLine($"GetJustMyFiles v.{version}");
+            Console.WriteLine($"GetJustMyFiles v.{version}\n");
             ReadDefaults(args);
             ReadExclusions();
             //ReadInclusions();
@@ -49,51 +47,51 @@ namespace GetJustMyFiles
 
                 //Console.WriteLine("\nUnattended use: .\\GetJustMyFiles <Source initial folder> <Destination folder>");
                 //Console.WriteLine("If <Destination folder> is omitted will save on desktop");
-                //Console.WriteLine("Giving no parameters will ask the user. Void input will set the default");
+                //Console.WriteLine("Giving no parameters will ask the user. Void input will set the Default");
                 //Console.WriteLine("Giving all \"any\" to Class, Subject and Exercize will copy ALL subdirectories.");
 
                 Console.WriteLine("\nUso senza UI: .\\GetJustMyFiles <Cartella sorgente> <Cartella di destinazione>");
                 Console.WriteLine("Se si omette <Cartella di destinazione> salva sul desktop");
-                Console.WriteLine("Se non si danno parametri da shell il programma chiede i dati all'utente. Risposte vuote useranno il default.");
-                Console.WriteLine("Rispondere con tutti \"any\" a Classe, Materia e Cartella dell'esercizio, copia cartella e TUTTE le sottocartelle.");
+                Console.WriteLine("Se non si danno parametri da shell il programma chiede i dati all'utente. Risposte vuote useranno il Default.");
+                Console.WriteLine("Per copiare cartella e TUTTE le sottocartelle, rispondere con tutti \"any\" a Classe, Materia e Cartella dell'esercizio.");
 
-                //Console.Write("\nSource base folder (default " + _sourceInitialFolder + "): ");
-                Console.Write("\nCartella base sorgente (default " + _sourceInitialFolder + "): ");
+                //Console.Write("\nSource base folder (Default " + _sourceInitialFolder + "): ");
+                Console.Write("\nCartella base sorgente (Default " + _sourceInitialFolder + "): ");
 
                 string dummy = Console.ReadLine();
                 if (dummy != "")
                     _sourceInitialFolder = dummy;
-                //Console.Write("Should I add today's date in source directory? (y/n) default n: ");
+                //Console.Write("Should I add today's date in source directory? (y/n) Default n: ");
                 //dummy = Console.ReadLine();
                 //addDateInSourceFolder = false;
                 //if (dummy != "")
                 //    addDateInSourceFolder = (dummy.Substring(0, 1) == "y");
-                Console.WriteLine();
-                //Console.Write("Destination base folder (ex. give Z: for network share)\n(default " + _destinationInitialFolder + "): ");
-                Console.Write("Cartella base di destinazione (per share di rete, dare Z:)\n(default " + _destinationInitialFolder + "): ");
+                //Console.WriteLine();
+                //Console.Write("Destination base folder (ex. give Z: for network share)\n(Default " + _destinationInitialFolder + "): ");
+                Console.Write("Cartella base di destinazione (per share di rete, dare Z:)\n(Default " + _destinationInitialFolder + "): ");
                 dummy = Console.ReadLine();
                 if (dummy != "")
                     _destinationInitialFolder = dummy;
                 _destinationFolder = _destinationInitialFolder;
 
-                //Console.Write("Class (give 'any' for any class folder, Enter for default)\n(default " + _className + "): ");
-                Console.Write("Classe (dare 'any' per tutte, Enter per default)\n(default " + _className + "): ");
+                //Console.Write("Class (give 'any' for any class folder, Enter for Default)\n(Default " + _className + "): ");
+                Console.Write("Classe (dare 'any' per tutte, Enter per Default)\n(Default " + _className + "): ");
                 dummy = Console.ReadLine();
                 if (dummy != "" && dummy != "any")
                     _className = dummy;
                 else if (dummy.ToLower() == "any" || _className == "any")
                     _className = "";
 
-                //Console.Write("Subject (give 'any' for any subject folder, Enter for default)\n(default " + _subjectName + "): ");
-                Console.Write("Materia (dare 'any' per tutte, Enter per default)\n(default " + _subjectName + "): ");
+                //Console.Write("Subject (give 'any' for any subject folder, Enter for Default)\n(Default " + _subjectName + "): ");
+                Console.Write("Materia (dare 'any' per tutte, Enter per Default)\n(Default " + _subjectName + "): ");
                 dummy = Console.ReadLine();
                 if (dummy != "" && dummy != "any")
                     _subjectName = dummy;
                 else if (dummy.ToLower() == "any" || _subjectName == "any")
                     _subjectName = "";
 
-                //Console.Write("Exercise's folder partial name (give 'any' for any folder, Enter for default)\n(default " +
-                Console.Write("Cartella dell'esercizio (dare 'any' per tutte, Enter per default)\n(default " +
+                //Console.Write("Exercise's folder partial name (give 'any' for any folder, Enter for Default)\n(Default " +
+                Console.Write("Cartella dell'esercizio (dare 'any' per tutte, Enter per Default)\n(Default " +
                     _exerciseFolderName + "): ");
                 dummy = Console.ReadLine();
                 string dummyLower = dummy.ToLower();
@@ -338,7 +336,7 @@ namespace GetJustMyFiles
         {
             if (!File.Exists(fileDefaults))
             {
-                // default file does not exist, make program's defaults
+                // Default file does not exist, make program's Defaults
                 _sourceInitialFolder = @"\\10.0.0.10\Studenti\";
                 _destinationInitialFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 _className = "3E";
@@ -349,7 +347,7 @@ namespace GetJustMyFiles
             string[] lines = File.ReadAllLines(fileDefaults);
             if (lines.Length == 0)
             {
-                // default file has no rows, make program's defaults
+                // Default file has no rows, make program's Defaults
                 _sourceInitialFolder = @"\\10.0.0.10\Studenti\";
                 _destinationInitialFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 _className = "3E";
@@ -384,19 +382,19 @@ namespace GetJustMyFiles
         }
         private static void SaveDefaults()
         {
-            string[] defaults = new string[5];
-            defaults[0] = "SourceInitialFolder\t" + _sourceInitialFolder;
-            defaults[1] = "DestinationFolder\t" + _destinationInitialFolder;
+            string[] Defaults = new string[5];
+            Defaults[0] = "SourceInitialFolder\t" + _sourceInitialFolder;
+            Defaults[1] = "DestinationFolder\t" + _destinationInitialFolder;
             if (_className == "")
                 _className = "any";
-            defaults[2] = "Class\t" + _className;
+            Defaults[2] = "Class\t" + _className;
             if (_subjectName == "")
                 _subjectName = "any";
-            defaults[3] = "Subject\t" + _subjectName;
+            Defaults[3] = "Subject\t" + _subjectName;
             if (_exerciseFolderName == "")
                 _exerciseFolderName = "any";
-            defaults[4] = "Exercise folder\t" + _exerciseFolderName;
-            File.WriteAllLines(fileDefaults, defaults);
+            Defaults[4] = "Exercise folder\t" + _exerciseFolderName;
+            File.WriteAllLines(fileDefaults, Defaults);
         }
         private static void ReadExclusions()
         {
@@ -419,64 +417,70 @@ namespace GetJustMyFiles
                     "\nProgram will not exclude any files or folder.");
                 return;
             }
-            //if (lines[0].Substring(0, 4) != "- fo")
-            //{
-            //    foldersExclusionsList.Clear();
-            //    extensionsExclusionsList.Clear();
-            //    filesExclusionsList.Clear();
-            //    Console.WriteLine("Format of file 'exclusions.txt' wrong." +
-            //        "\nProgram will not exclude any files or folder.");
-            //    return;
-            //}
             int index = 0;
-            bool exit = false;
-            do
+            while (true)
             {
                 if (lines[index] != "")
                 {
-                    int pos = lines[index].IndexOf('#');
                     string line = lines[index];
+                    int posPound = line.IndexOf('#');
                     string firstChars = "";
-                    if (lines[index] != "" && pos >= 0)
+                    if (line != "" && posPound >= 0)
+                    {   // line includes a #, throw all characters after the #
+                        line = line.Substring(0, posPound);
+                    }
+                    if (line.Length >= 4)
                     {
-                        firstChars = lines[index].Substring(0, pos);
+                        firstChars = line.Substring(0, 4);
                         if (firstChars == "- ex")
                         {
-                            exit = true;
+                            index++;
                             break;
                         }
                     }
                     if (line != "" && firstChars != "- fo" && firstChars != "- ex")
                     {
+                        Console.WriteLine("Folder excluded: {0}", line);
                         foldersExclusionsList.Add(line.Trim().ToLower());
                     }
                 }
                 index++;
-            } while (!exit);
-            exit = false;
-            do
+            }
+            while (true)
             {
-                string line = lines[index].Substring(0, lines[index].IndexOf('#'));
-                string firstChars = line.Substring(0, 4);
-                if (line != "")
+                if (lines[index] != "")
                 {
-                    if (firstChars == "- ex")
-                        exit = true;
-                    else
+                    string line = lines[index];
+                    int posPound = line.IndexOf('#');
+                    string firstChars = "";
+                    if (line != "" && posPound >= 0)
+                    {   // line includes a #, throw all characters after the #
+                        line = line.Substring(0, posPound);
+                    }
+                    if (line.Length >= 4)
+                    {
+                        firstChars = line.Substring(0, 4);
+                        if (firstChars == "- fi")
+                        {
+                            index++;
+                            break;
+                        }
+                    }
+                    if (line != "")
+                    {
+                        Console.WriteLine("Extension excluded: {0}", line);
                         extensionsExclusionsList.Add(line.Trim().ToLower());
+                    }
                 }
                 index++;
-            } while (!exit);
+            }
             while (index < lines.Length)
             {
                 string line = lines[index].Substring(0, lines[index].IndexOf('#'));
-                string firstChars = line.Substring(0, 4);
                 if (line != "")
                 {
-                    if (firstChars == "- ex")
-                        exit = true;
-                    else
-                        filesExclusionsList.Add(lines[index].Trim().ToLower());
+                    Console.WriteLine("File excluded: {0}", line);
+                    filesExclusionsList.Add(lines[index].Trim().ToLower());
                 }
                 index++;
             }
