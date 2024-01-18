@@ -1,6 +1,6 @@
-# File of exclusions in GetMyFiles 
+# File of exclusions in GetJustMyFiles 
 # It is divided into three sections: folders excluded, extensions excluded and files excluded
-# (in thos files sections must be written in that order!)
+# (in thise file sections must be written in that order!)
 # Sections start with: 
 #  "- fo" (or "- folders excluded"): it is the beginning of the list of excluded folders
 #  "- ex" (or "- extensions excluded"): it is the beginning of the list of excluded extensions
@@ -26,7 +26,7 @@ packages
 .png
 .gif
 .zip
-.dll
+.dll    # this comment on partial line will not void .dll exclusions. .dll files will be excluded from copy
 #.exe	# remove the pound sign if you don't want to get also files with extension .exe 
 - files excluded
 #esclusioneEsclusa.txt
