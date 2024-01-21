@@ -1,5 +1,4 @@
-# GetJustMyFiles v.0.9.3
-
+# GetJustMyFiles
 ## A CLI program to retrieve files from a folder, excluding those unwanted
 
 GetJustMyFiles recursively scans the Windows folders that start from a given source folder, copying on a destination folder only folders, extensions and files that aren't excluded by a list read from the textfile "exclusions.txt". (for the autoexplaining syntax, see the exclusions.txt file in distribution).  
