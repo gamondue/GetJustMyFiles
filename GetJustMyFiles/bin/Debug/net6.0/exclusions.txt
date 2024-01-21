@@ -17,6 +17,7 @@ bin
 packages
 .bin
 .vs
+.vscode
 .git
 .gitHub
 
@@ -26,8 +27,10 @@ packages
 .png
 .gif
 .zip
+.sqlite
 .dll    # this comment on partial line will not void .dll exclusions. .dll files will be excluded from copy
-#.exe	# remove the pound sign if you don't want to get also files with extension .exe 
+.exe	# remove the pound sign if you don't want to get also files with extension .exe 
 - files excluded
 #esclusioneEsclusa.txt
+sqlite3.exe
 README.md # just an example of a single file that isn't taken 

@@ -1,5 +1,6 @@
-
-/GetJustMyFiles/bin/Release/net6.0/GetJustMyFiles.deps.json
-/GetJustMyFiles/bin/Release/net6.0/GetJustMyFiles.dll
-/GetJustMyFiles/bin/Release/net6.0/GetJustMyFiles.exe
-/GetJustMyFiles/bin/Release/net6.0/GetJustMyFiles.runtimeconfig.json
+.git
+.vs
+/GetJustMyFiles/bin/Debug/net6.0/GetJustMyFiles.deps.json
+/GetJustMyFiles/bin/Debug/net6.0/GetJustMyFiles.dll
+/GetJustMyFiles/bin/Debug/net6.0/GetJustMyFiles.exe
+/GetJustMyFiles/bin/Debug/net6.0/GetJustMyFiles.runtimeconfig.json

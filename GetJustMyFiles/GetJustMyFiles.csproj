@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <ApplicationIcon>gamon LegoLogo decentrato trasparente 256x256.ico</ApplicationIcon>
-    <Version>0.9.3</Version>
+    <Version>0.9.4</Version>
   </PropertyGroup>
 
   <ItemGroup>

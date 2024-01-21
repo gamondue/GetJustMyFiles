@@ -438,10 +438,12 @@
                             break;
                         }
                     }
-                    if (line != "" && firstChars != "- fo" && firstChars != "- ex")
+                    string trimmedLine = line.Trim().ToLower(); 
+                    if (line != "" && firstChars != "- fo" && firstChars != "- ex" && 
+                        !foldersExclusionsList.Contains(trimmedLine))
                     {
                         Console.WriteLine("Folder excluded: {0}", line);
-                        foldersExclusionsList.Add(line.Trim().ToLower());
+                        foldersExclusionsList.Add(trimmedLine);
                     }
                 }
                 index++;
@@ -466,7 +468,9 @@
                             break;
                         }
                     }
-                    if (line != "")
+                    string trimmedLine = line.Trim().ToLower();
+                    if (line != "" && firstChars != "- fi" &&
+                        !foldersExclusionsList.Contains(trimmedLine))
                     {
                         Console.WriteLine("Extension excluded: {0}", line);
                         extensionsExclusionsList.Add(line.Trim().ToLower());
@@ -476,8 +480,14 @@
             }
             while (index < lines.Length)
             {
-                string line = lines[index].Substring(0, lines[index].IndexOf('#'));
-                if (line != "")
+                string line = lines[index];
+                int posPound = line.IndexOf('#');
+                if (line != "" && posPound >= 0 )
+                {
+                    line = line.Substring(0, posPound);
+                }
+                string trimmedLine = line.Trim().ToLower();
+                if (line != "" && !foldersExclusionsList.Contains(trimmedLine))
                 {
                     Console.WriteLine("File excluded: {0}", line);
                     filesExclusionsList.Add(lines[index].Trim().ToLower());

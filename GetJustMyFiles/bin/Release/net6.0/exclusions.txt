@@ -1,13 +1,13 @@
-# File of exclusions in GetMyFiles 
+# File of exclusions in GetJustMyFiles 
 # It is divided into three sections: folders excluded, extensions excluded and files excluded
-# (in thos files sections must be written in that order!)
+# (in thise file sections must be written in that order!)
 # Sections start with: 
 #  "- fo" (or "- folders excluded"): it is the beginning of the list of excluded folders
 #  "- ex" (or "- extensions excluded"): it is the beginning of the list of excluded extensions
 #  "- fi" (or "- files excluded"): it is the beginning of the list of excluded files
 
 # pound sign is the comment symbol. All text in a line following a # sign will be ignored 
-# an example follows, well suited for the folders in ITT Blaise Pascal - Cesena
+# an example follows, well suited for the folders in ITT's Blaise Pascal - Cesena LAN server 
 
 - folders excluded 
 Condivisione
@@ -15,7 +15,9 @@ Condivisione
 obj
 bin
 packages
+.bin
 .vs
+.vscode
 .git
 .gitHub
 
@@ -25,8 +27,10 @@ packages
 .png
 .gif
 .zip
-.dll
-#.exe	# remove the pound sign if you don't want to get also exe files 
+.sqlite
+.dll    # this comment on partial line will not void .dll exclusions. .dll files will be excluded from copy
+.exe	# remove the pound sign if you don't want to get also files with extension .exe 
 - files excluded
 #esclusioneEsclusa.txt
+sqlite3.exe
 README.md # just an example of a single file that isn't taken 
